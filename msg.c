@@ -8,9 +8,6 @@ typedef struct myMsg {
     int payload;
 } myMsg;
 
-
-
-
 void myHandler(void *msg) {
     // receive logic
     myMsg* receivedMsg = (myMsg*)msg;
@@ -24,7 +21,8 @@ void myHandler(void *msg) {
     CmiSetHandler(msg, msg_index);
     CmiPrintf("Sending ping from PE #%d to PE #%d\n", CmiMyPe(), nextPE);
     CmiSyncSendAndFree(nextPE, sizeof(myMsg), receivedMsg);
-
+    
+    // exit
     if (receivedMsg->payload == 1) {
         CmiPrintf("Exiting PE #%d\n", CmiMyPe());
         CsdExitScheduler();
@@ -32,7 +30,6 @@ void myHandler(void *msg) {
 }
 void myInit() {
     msg_index = CmiRegisterHandler(myHandler);
-
     if (CmiMyPe() == 0) {
         myMsg* msg = (myMsg*)CmiAlloc(sizeof(myMsg));
         msg->payload = 0;
@@ -44,5 +41,5 @@ void myInit() {
 }
 
 int main(int argc, char **argv) {
-  ConverseInit(argc,argv,myInit,0,0);
+  ConverseInit(argc, argv, myInit,0,0);
 }
