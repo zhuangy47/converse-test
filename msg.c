@@ -18,7 +18,6 @@ void myHandler(void *msg) {
 
     // reply logic
     int nextPE = (CmiMyPe() + 1) % CmiNumPes();
-    CmiSetHandler(msg, msg_index);
     CmiPrintf("Sending ping from PE #%d to PE #%d\n", CmiMyPe(), nextPE);
     CmiSyncSendAndFree(nextPE, sizeof(myMsg), receivedMsg);
     

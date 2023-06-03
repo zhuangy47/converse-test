@@ -1,4 +1,4 @@
-CHARMC=/mnt/c/Users/zhuangy/charm/charm-v7.0.0/bin/charmc $(OPTS)
+CHARMC=../../charmc $(OPTS)
 
 OBJS = \
   msg.o \
